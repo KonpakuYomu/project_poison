@@ -1,0 +1,4 @@
+./style_transfer.sh --sample_dir=/root/autodl-tmp/dataset/sample_resolution_512 \
+                    --model_dir=/root/autodl-tmp/model/stable-diffusion-2-1-base \
+                    --model_type=SD2.1 --aim_style=Cubism
+                    

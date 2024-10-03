@@ -28,7 +28,7 @@ def main(args):
                 continue
             genre_max_num = 0
             for genre in image_info[style][artist]:
-                if genre == "Unknown Genre":
+                if genre == "Unknown Genre" or genre == "sketch_and_study":
                     continue
                 if image_info[style][artist][genre] > genre_max_num:
                     genre_max_num = image_info[style][artist][genre]
@@ -39,7 +39,7 @@ def main(args):
             image_dir = f"{args.origin_images_dir}/{style}/{artist}/{max_genre}"
             print(f"sampling images from {image_dir}")
             sample_dir = f"{args.exp_data_dir}/sample_resolution_{args.resolution}/{style}/{artist}"
-            train_dir, test_dir = f"{sample_dir}/train", f"{sample_dir}/test"
+            train_dir, test_dir = f"{sample_dir}/train_clean", f"{sample_dir}/test"
             os.makedirs(train_dir, exist_ok=True)
             os.makedirs(test_dir, exist_ok=True)
             images = [file for file in os.listdir(image_dir) if file.endswith(".jpg")]
