@@ -1,0 +1,13 @@
+python poisoning.py --poison_method=glaze --device=cuda:0 \
+                    --p1=0.05 --alpha=30 --lr=1e-2 --iters=500 
+
+python poisoning.py --poison_method=poi --device=cuda:0 \
+                    --p1=0.1 --p2=0.005 --alpha=100 --lr=1e-2 --iters=400 
+
+python decode.py --image_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/glaze/p0.05_alpha30_lr0.01_iter500 \
+                 --save_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/decode/glaze/p0.05_alpha30_lr0.01_iter500 \
+                 --device=cuda:0 
+
+python decode.py --image_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400 \
+                 --save_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/decode/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400 \
+                 --device=cuda:0
