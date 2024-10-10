@@ -3,3 +3,6 @@
 
 # open_clip
 clip_training/open_clip
+
+# python
+__pycache__
