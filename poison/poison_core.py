@@ -35,10 +35,10 @@ def glaze(x, x_trans, model, p=0.05, alpha=30, iters=500, lr=1e-2):
 
 
 def poi(x, x_trans, model, p1=0.1, p2=0.0025, alpha=10, iters=300, lr=1e-2):
-    delta1 = (torch.randn(*x.shape) * 2 * p1 - p1).to(x.device)
+    delta1 = (torch.randn(*x.shape) * 0.01).to(x.device)
     with torch.no_grad():
         x_trans_emb = model.encode(x_trans).latent_dist.sample()
-    delta2 = (torch.randn(*x_trans_emb.shape) * 2 * p2 - p2).to(x_trans_emb.device)
+    delta2 = (torch.randn(*x_trans_emb.shape) * 0.01).to(x_trans_emb.device)
     
     pbar = tqdm(range(iters))
     criterion = nn.MSELoss()
@@ -73,7 +73,7 @@ def poi(x, x_trans, model, p1=0.1, p2=0.0025, alpha=10, iters=300, lr=1e-2):
     return x_adv, target_dec
 
 def poi_decode_without_target_perturbation(x, x_trans, model, p1=0.1, iters=300):
-    delta1 = (torch.randn(*x.shape) * 2 * p1 - p1).to(x.device)
+    delta1 = (torch.randn(*x.shape) * 0.01).to(x.device)
     pbar = tqdm(range(iters))
     criterion = nn.MSELoss()
     
@@ -96,8 +96,8 @@ def poi_decode_without_target_perturbation(x, x_trans, model, p1=0.1, iters=300)
     return x_adv
     
 def poi_decode(x, x_trans, model, p1=0.1, p2=0.1, iters=300):
-    delta1 = (torch.randn(*x.shape) * 2 * p1 - p1).to(x.device)
-    delta2 = (torch.randn(*x_trans.shape) * 2 * p2 - p2).to(x_trans.device)
+    delta1 = (torch.randn(*x.shape) * 0.01).to(x.device)
+    delta2 = (torch.randn(*x_trans.shape) * 0.01).to(x_trans.device)
     pbar = tqdm(range(iters))
     criterion = nn.MSELoss()
     

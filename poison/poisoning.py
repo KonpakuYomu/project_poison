@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('--model', default='/root/autodl-tmp/model/stable-diffusion-2-1-base', type=str)
     parser.add_argument('--manual_seed', default=0, type=int)
     parser.add_argument('--device', default='cuda:0', type=str)
-    parser.add_argument('--artist_dir', default='/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis', type=str)
+    parser.add_argument('--artist_dir', default='/root/autodl-tmp/dataset/sample_resolution_512/Baroque/rembrandt', type=str)
 
     parser.add_argument('--poison_method', type=str, choices=['glaze', 'poi'], default='glaze')
     # mutual hyperparameters of poi and glaze

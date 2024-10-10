@@ -1,7 +1,9 @@
 python poisoning.py --poison_method=glaze --device=cuda:0 \
+                    --artist_dir=/root/autodl-tmp/dataset/sample_resolution_512/Baroque/rembrandt \
                     --p1=0.05 --alpha=30 --lr=1e-2 --iters=500 
 
 python poisoning.py --poison_method=poi --device=cuda:0 \
+                    --artist_dir=/root/autodl-tmp/dataset/sample_resolution_512/Baroque/rembrandt \
                     --p1=0.1 --p2=0.005 --alpha=100 --lr=1e-2 --iters=400 
 
 python decode.py --image_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/glaze/p0.05_alpha30_lr0.01_iter500 \
@@ -11,3 +13,34 @@ python decode.py --image_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abst
 python decode.py --image_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400 \
                  --save_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/decode/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400 \
                  --device=cuda:0
+
+accelerate launch train_text_to_image.py \
+  --pretrained_model_name_or_path=/root/autodl-tmp/model/stable-diffusion-2-1-base \
+  --train_data_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400 \
+  --use_ema --center_crop --random_flip --gradient_checkpointing --enable_xformers_memory_efficient_attention --lr_scheduler="constant" \
+  --resolution=512 \
+  --train_batch_size=4 \
+  --gradient_accumulation_steps=1 \
+  --mixed_precision="fp16" \
+  --max_train_steps=3000 \
+  --checkpointing_steps=5000 \
+  --learning_rate=5e-6 \
+  --max_grad_norm=1 \
+  --lr_warmup_steps=0 \
+  --output_dir=/root/autodl-tmp/model/finetuned_SD2.1/Abstract_Expressionism/sam-francis/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400
+
+python generate.py \
+    --model_dir=/root/autodl-tmp/model/finetuned_SD2.1/Abstract_Expressionism/sam-francis/glaze/p0.05_alpha30_lr0.01_iter500 \
+    --output_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/generated/glaze/p0.05_alpha30_lr0.01_iter500 
+
+python generate.py \
+    --model_dir=/root/autodl-tmp/model/finetuned_SD2.1/Abstract_Expressionism/sam-francis/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400 \
+    --output_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/generated/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400
+
+python evaluation.py \
+    --test_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/generated/glaze/p0.05_alpha30_lr0.01_iter500 
+
+python evaluation.py \
+    --test_dir=/root/autodl-tmp/dataset/sample_resolution_512/Abstract_Expressionism/sam-francis/generated/poi/p1_0.1_p2_0.005_alpha100_lr0.01_iter400
+
+
