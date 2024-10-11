@@ -17,7 +17,7 @@ def main(args):
 
     os.makedirs(args.save_dir, exist_ok=True)
     for file_name in os.listdir(args.image_dir):
-        if not file_name.endswith(".jpg"):
+        if not file_name.endswith(".png"):
             continue
         init_image = Image.open(f"{args.image_dir}/{file_name}").convert("RGB")
         x = img2tensor(init_image).to(device)

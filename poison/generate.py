@@ -21,7 +21,7 @@ def main(args):
     
     for text in text_prompts:
         generated_image = pipe_text2img(prompt=text, num_inference_steps=args.diff_steps).images[0]
-        generated_image.save(f"{args.output_dir}/{text}.jpg")
+        generated_image.save(f"{args.output_dir}/{text}.png")
 
 
 if __name__ == '__main__':

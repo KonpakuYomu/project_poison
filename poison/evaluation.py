@@ -23,7 +23,7 @@ def main(args):
     text_features /= text_features.norm(dim=-1, keepdim=True)
     counter, shift_num, target_num = 0, 0, 0
     for file in os.listdir(args.test_dir):
-        if not file.endswith(".jpg"):
+        if not file.endswith(".png"):
             continue
         counter += 1
         image_path = f"{args.test_dir}/{file}"

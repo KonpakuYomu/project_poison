@@ -28,7 +28,7 @@ def main(args):
     
     for file_name in os.listdir(clean_dir):
         image_path = f"{clean_dir}/{file_name}"
-        if not image_path.endswith(".jpg"):
+        if not image_path.endswith(".png"):
             continue
         prompt = f"{args.aim_style} style"
         image = Image.open(f"{clean_dir}/{file_name}").convert("RGB")

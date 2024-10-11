@@ -42,7 +42,7 @@ def main(args):
             train_dir, test_dir = f"{sample_dir}/train_clean", f"{sample_dir}/test"
             os.makedirs(train_dir, exist_ok=True)
             os.makedirs(test_dir, exist_ok=True)
-            images = [file for file in os.listdir(image_dir) if file.endswith(".jpg")]
+            images = [file for file in os.listdir(image_dir) if file.endswith(".png")]
             #print(len(images))
             images = sample(images, train_num+test_num)
             train_images, test_images = images[:train_num], images[train_num:]
